@@ -11,6 +11,7 @@ All rights reserved.
 """
 import os
 import hashlib
+import urllib
 
 import json
 from tornado.web import authenticated
@@ -108,7 +109,7 @@ class ZdZnodeViewHandler(CommonBaseHandler):
             download_link = "/config/znode/download?path={0}&cluster_name={1}".format(
                 self.path, self.cluster_name)
         else:
-            data = ZookeeperService.get(self.cluster_name, self.path)
+            data = ZookeeperService.get(self.cluster_name, urllib.unquote(self.path))
 
         return self.render('config/znode/view.html',
                            data=data,
